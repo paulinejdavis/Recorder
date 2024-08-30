@@ -99,7 +99,8 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(RecipeCollectionViewCell.self, forCellWithReuseIdentifier: RecipeCollectionViewCell.identifier)
+        //create a block that register correct cell for user
     }
     
     // MARK: - UICollectionView DataSource and Delegate
@@ -109,7 +110,7 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecipeCollectionViewCell.identifier, for: indexPath)
         if let configureCell = configureCell {
             let item = items[indexPath.item]
             configureCell(cell, item)

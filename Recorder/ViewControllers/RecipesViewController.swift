@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+
 class RecipesViewController: BaseCollectionViewController<Recipe> {
 
     let viewModel: RecipeViewModelProtocol

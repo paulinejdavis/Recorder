@@ -30,6 +30,45 @@ struct RecipeViewModel: RecipeViewModelProtocol {
             }(),
             ingredients: ["A spicy flavourful chicken recipe without the traditional barrel cooking."]
             
+        ),
+        Recipe(
+            title: "No-barrel Jerk Chicken2",
+            description: "A spicy flavourful chicken recipe without the traditional barrel cooking.",
+            image: {
+                let image = UIImage(named: "jerk_chicken")
+                if  image == nil {
+                    print("image not found")
+                }
+                return image
+            }(),
+            ingredients: ["A spicy flavourful chicken recipe without the traditional barrel cooking."]
+            
+        ),
+        Recipe(
+            title: "No-barrel Jerk Chicken",
+            description: "A spicy flavourful chicken recipe without the traditional barrel cooking.",
+            image: {
+                let image = UIImage(named: "jerk_chicken")
+                if  image == nil {
+                    print("image not found")
+                }
+                return image
+            }(),
+            ingredients: ["A spicy flavourful chicken recipe without the traditional barrel cooking."]
+            
+        ),
+        Recipe(
+            title: "No-barrel Jerk Chicken2",
+            description: "A spicy flavourful chicken recipe without the traditional barrel cooking.",
+            image: {
+                let image = UIImage(named: "jerk_chicken")
+                if  image == nil {
+                    print("image not found")
+                }
+                return image
+            }(),
+            ingredients: ["A spicy flavourful chicken recipe without the traditional barrel cooking."]
+            
         )
     
     
