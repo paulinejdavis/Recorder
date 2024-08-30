@@ -27,8 +27,12 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
     let appLogoImageView = UIImageView()
     let separatorView = UIView()
     
+    let uniqueLogo = UIImageView()
+    var imageLogo: UIImage?
+    var configureImageLogo: ((UIImageView) -> Void)?
+    
     // Collection view
-    private let collectionView: UICollectionView
+    internal let collectionView: UICollectionView
     
     init(items: [T]) {
         self.items = items
@@ -40,6 +44,10 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        if let configureImageLogo = self.configureImageLogo {
+            configureImageLogo(self.uniqueLogo)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -73,13 +81,13 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
 
         NSLayoutConstraint.activate([
             // App Logo constraints
-            appLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            appLogoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
             appLogoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10), // Position to the left
-            appLogoImageView.heightAnchor.constraint(equalToConstant: 90),
-            appLogoImageView.widthAnchor.constraint(equalToConstant: 200), // Adjust the width as needed
+            appLogoImageView.heightAnchor.constraint(equalToConstant: 60),
+            appLogoImageView.widthAnchor.constraint(equalToConstant: 120), // Adjust the width as needed
 
             // Separator constraints
-            separatorView.topAnchor.constraint(equalTo: appLogoImageView.bottomAnchor, constant: 10),
+            separatorView.topAnchor.constraint(equalTo: appLogoImageView.bottomAnchor, constant: -5),
             separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             separatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             separatorView.heightAnchor.constraint(equalToConstant: 1)
@@ -87,20 +95,20 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
             ])
     }
     
-    private func setupCollectionView() {
+    internal func setupCollectionView() {
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             // Adjust collectionView's top constraint to be below the separator
-            collectionView.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 20),
+            collectionView.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 65),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
         collectionView.register(RecipeCollectionViewCell.self, forCellWithReuseIdentifier: RecipeCollectionViewCell.identifier)
-        //create a block that register correct cell for user
+        //create a block that register correct cell for user - subclassing not good tech - composition over sub class
     }
     
     // MARK: - UICollectionView DataSource and Delegate
