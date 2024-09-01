@@ -58,6 +58,12 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
         super.viewDidLoad()
         setupCommonUI()
         setupCollectionView()
+        
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                layout.minimumInteritemSpacing = 0 // No spacing between items
+                layout.minimumLineSpacing = 0 // No spacing between lines
+                layout.sectionInset = .zero // No section insets
+            }
     }
     
     private func setupCommonUI() {
@@ -116,7 +122,7 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecipeCollectionViewCell.identifier, for: indexPath)
         if let configureCell = configureCell {
@@ -124,6 +130,25 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
             configureCell(cell, item)
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // Calculate the size of each item to fill the collection view without gaps
+        let numberOfItemsPerRow: CGFloat = 2 // Or 2, based on your design
+        let spacing: CGFloat = 0 // No spacing between items
+        
+        let totalSpacing = (numberOfItemsPerRow - 1) * spacing
+        let itemWidth = (collectionView.bounds.width - totalSpacing) / numberOfItemsPerRow
+        
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0 // No spacing between items horizontally
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0 // No spacing between items vertically
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -135,7 +160,7 @@ class BaseCollectionViewController<T>: UIViewController, UICollectionViewDelegat
     
     // MARK: - UICollectionViewDelegateFlowLayout
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.size.width/2 - 10, height: view.frame.size.width/2)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: view.frame.size.width/2 - 10, height: view.frame.size.width/2)
+//    }
 }
